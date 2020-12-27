@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-const API_ENDPOINT = "https://data.bs.ch/api/records/1.0/search/?dataset=100073&q=&sort=timestamp&facet=timestamp";
+const API_ENDPOINT = "https://data.bs.ch/api/records/1.0/search/?dataset=100077&q=BS+or+BL&rows=100&sort=update";
 let ausgabe = ""
 
 exports.handler = async (event, context) => {
@@ -8,7 +8,9 @@ exports.handler = async (event, context) => {
     .then(response => response.json())
     .then(function(data){
         // Displaying it to the DOM
-         data.records.forEach(post => { ausgabe+= post.fields.current_quarantined_total+=" - ";});
+         data.records.forEach(post => { 
+             
+                 ausgabe+= post.fields.ncumul_conf+=" - ";});
       })
       .then(data => ({
         statusCode: 200,

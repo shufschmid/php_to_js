@@ -4,17 +4,17 @@
 
 <script>
   let ausgabe = ""
-fetch('https://data.bs.ch/api/records/1.0/search/?dataset=100073&q=&sort=timestamp&facet=timestamp')
+fetch('https://data.bs.ch/api/records/1.0/search/?dataset=100077&q=BS+or+BL&rows=100&sort=update')
     .then(function(response){
         return response.json()
         })
-        .then(function(data){
+        .then(function(data){ 
           // Displaying it to the DOM
-           data.records.forEach(post => { ausgabe+= post.fields.current_quarantined_total+=" - ";});
+           data.records.forEach(post => { ausgabe+= post.fields.ncumul_conf+=" - ";});
            document.write(ausgabe)
+          
         })
 
 </script>
-test
 </body>
 </html>
