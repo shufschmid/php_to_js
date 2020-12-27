@@ -21,7 +21,7 @@ exports.handler = async (event, context) => {
                 });
                 allBS.reverse()
                 allBL.reverse()
-                        let newCasesCumBS = []
+                let newCasesCumBS = []
                 let newCasesCumBL = []
                 allBS.forEach((e, index) => {
                     // @Todo addition of last 7 or 14 days from current date e into the past
@@ -33,11 +33,12 @@ exports.handler = async (event, context) => {
                 allBL.forEach((e, index) => {
                     newCasesCumBL.push(index > 0 ? e - allBL[index - 1] > 0 ? e - allBL[index - 1] : 0 : 0)
                 })
+                ausgabe = JSON.stringify(newCasesCumBL)
 
       })
       .then(data => ({
         statusCode: 200,
-        body: newCasesCumBL
+        body: ausgabe
       }))
     .catch(error => ({ statusCode: 422, body: String(error) }));
 };
