@@ -9,12 +9,32 @@ exports.handler = async (event, context) => {
     .then(function(data){
         // Displaying it to the DOM
          data.records.forEach(post => { 
-             
-                 ausgabe+= post.fields.ncumul_conf+=" - ";});
+            if(post.fields.abbreviation_canton_and_fl == "BS") {
+                allBS.push(parseInt(post.fields.ncumul_conf));
+              }
+              else if(post.fields.abbreviation_canton_and_fl == "BL") {
+                allBL.push(parseInt(post.fields.ncumul_conf));
+              }
+                });
+                allBS.reverse()
+                allBL.reverse()
+                        let newCasesCumBS = []
+                let newCasesCumBL = []
+                allBS.forEach((e, index) => {
+                    // @Todo addition of last 7 or 14 days from current date e into the past
+                    // push only if the difference between previous day and current day is positive, if not add zero
+                    newCasesCumBS.push(index > 0 ? e - allBS[index - 1] > 0 ? e - allBS[index - 1] : 0 : 0);
+                    
+                })
+            
+                allBL.forEach((e, index) => {
+                    newCasesCumBL.push(index > 0 ? e - allBL[index - 1] > 0 ? e - allBL[index - 1] : 0 : 0)
+                })
+
       })
       .then(data => ({
         statusCode: 200,
-        body: ausgabe
+        body: newCasesCumBL
       }))
     .catch(error => ({ statusCode: 422, body: String(error) }));
 };
