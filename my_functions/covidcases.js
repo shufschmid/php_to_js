@@ -5,9 +5,9 @@ const API_ENDPOINT = "https://data.bs.ch/api/records/1.0/search/?dataset=100073&
 exports.handler = async (event, context) => {
   return fetch(API_ENDPOINT, { headers: { "Accept": "application/json" } })
     .then(response => response.json())
-    .then(data => ({
-      statusCode: 200,
-      body: JSON.stringify(data.records)
-    }))
+    .then(function(data){
+        // Displaying it to the DOM
+         data.records.forEach(post => { console.log(post.fields.current_quarantined_total)});
+      })
     .catch(error => ({ statusCode: 422, body: String(error) }));
 };
